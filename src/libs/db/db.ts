@@ -1,6 +1,6 @@
 import {DataSource} from 'typeorm'
 import * as dotenv from 'dotenv'
-import {CustomerInfo} from './entities/company'
+import {CustomerInfo} from './entities/customer-info'
 
 dotenv.config()
 

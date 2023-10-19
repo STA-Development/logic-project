@@ -12,17 +12,10 @@ module.exports = {
     'plugin:security/recommended',
     'plugin:sonarjs/recommended',
   ],
-  overrides: [
-    {
-      files: ['*.test.ts'],
-    },
-  ],
   root: true,
-  env: {node: true, jest: true},
-  ignorePatterns: ['dist', '.eslintrc.js', 'script.js'],
+  env: {node: true},
+  ignorePatterns: ['.eslintrc.js', 'script.js'],
   rules: {
-    'sonarjs/no-duplicate-string': 'off',
-    'sonarjs/prefer-immediate-return': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {argsIgnorePattern: '^_', ignoreRestSiblings: true},

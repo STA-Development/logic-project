@@ -1,10 +1,10 @@
 import multer from 'multer'
 import {Request} from 'express'
-import {currentDate, pdfError} from '../consts/const'
+import {currentDate, errors} from '../consts/const'
 
-export const paymentStorage = multer.diskStorage({
+export const pdfFilesStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './public/img/coi')
+    cb(null, './src/public/img')
   },
   filename: (req: Request, file, cb) => {
     const [name, extension] = file.originalname.split('.')
@@ -12,8 +12,8 @@ export const paymentStorage = multer.diskStorage({
     cb(null, fileName)
   },
 })
-export const uploadPayment = multer({
-  storage: paymentStorage,
+export const uploadCoi = multer({
+  storage: pdfFilesStorage,
   limits: {
     fileSize: 5000000,
   },
@@ -22,7 +22,7 @@ export const uploadPayment = multer({
       cb(null, true)
     } else {
       cb(null, false)
-      return cb(new Error(pdfError))
+      return cb(new Error(errors.pdf))
     }
   },
 })

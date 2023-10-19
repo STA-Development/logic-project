@@ -1,5 +1,6 @@
 export enum Payment {
-  thirtyDays = 'ThirtyDays',
-  businessDays = 'BusinessDays',
-  thirtyDaysFactoring = 'ThirtyDaysFactoring',
+  ThirtyDays = 'ThirtyDays',
+  BusinessDays = 'BusinessDays',
+  ThirtyDaysFactoring = 'ThirtyDaysFactoring',
+  InternalServer = 'Internal Server Error'
 }

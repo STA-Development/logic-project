@@ -1,27 +1,29 @@
-import fileUpload from 'express-fileupload'
+import fileUpload, {FileArray} from 'express-fileupload'
 import {Request, Response} from 'express'
 import CustomerInfoService from '../services/customer-info.service'
+import {errors} from '../libs/consts/const'
+
 
 class CustomerController {
-  async createPhotos(req: Request, res: Response): Promise<unknown> {
-    try {
-      console.log(23242323)
-      const originalName = req.file as unknown as fileUpload.FileArray
 
-      return res.json(originalName.filename)
+  async uploadPhoto(req: Request, res: Response): Promise<unknown> {
+    try {
+      const originalName = req.file as unknown as fileUpload.FileArray;
+
+      const name = await CustomerInfoService.savePhoto(originalName.filename)
+      return res.json(name);
     } catch (error) {
-      console.log(error)
+      console.error(error);
+      return res.status(500).json({ error: errors.internalServer });
     }
   }
-
   async createCustomerInfo(req: Request, res: Response): Promise<unknown> {
     try {
-      console.log(3333, req.body, 242)
       const customerService = CustomerInfoService.createCustomerInfo(req.body)
 
       return res.json(customerService)
     } catch (error) {
-      console.log(error)
+      return res.status(500).json({ error: errors.internalServer });
     }
   }
 }

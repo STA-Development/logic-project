@@ -3,13 +3,11 @@ let selectedRadioButton = ''
 
 function findRadioButtonName(name) {
   selectedRadioButton = name
-  console.log(selectedRadioButton)
 }
 
 const form = document.querySelector('.needs-validation')
 
 async function UploadImages(event, name) {
-  console.log(event, name)
 
   const backendEndpoint = 'http://localhost:3000/api/upload'
 
@@ -25,7 +23,6 @@ async function UploadImages(event, name) {
       },
     })
     uploadedFileNames = {...uploadedFileNames, [name]: response.data}
-    console.log(uploadedFileNames)
   } catch (error) {
     throw new Error(error)
   }
@@ -134,7 +131,7 @@ async function postData() {
     })
     showAlert('success', 'Form submitted successfully!')
   } catch (error) {
-    console.error(error)
+   throw new Error()
   }
 }
 function hideShowDiv(val) {
@@ -153,16 +150,17 @@ document.getElementById('submit').addEventListener('click', function (event) {
   if (!form.checkValidity()) {
     event.preventDefault()
     event.stopPropagation()
+    form.classList.add('was-validated');
   } else {
     postData()
     formId.reset()
+    form.classList.remove('was-validated');
   }
 
-  form.classList.add('was-validated')
+
 })
 
 const box = document.getElementById('box')
-console.log(box)
 const boxSecond = document.getElementById('box')
 function handleRadioClick() {
   if (document.getElementById('option1').checked) {

@@ -3,6 +3,7 @@ import path from 'path'
 import {dbmsMysql} from './libs/db/db'
 import {router} from './routes/customer-routes'
 import bodyParser from 'body-parser'
+import {errors, initialize} from './libs/consts/const'
 
 const server = express()
 const port = 3000
@@ -15,10 +16,10 @@ server.use('/api', router)
 dbmsMysql
   .initialize()
   .then(() => {
-    console.log('Data Source has been initialized')
+    console.log(initialize)
   })
-  .catch((err) => {
-    console.error('Data source initialized error ', err)
+  .catch((error) => {
+    throw new Error(errors.internalServer, error)
   })
 
 server.set('views', path.join(__dirname, 'views'))

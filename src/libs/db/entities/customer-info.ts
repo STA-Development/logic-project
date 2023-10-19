@@ -143,15 +143,15 @@ export class CustomerInfo {
   type3: string
 
   @Column({type: 'int'})
-  @IsString()
+  @IsNumber()
   quantity: number
 
   @Column({type: 'int'})
-  @IsString()
+  @IsNumber()
   quantity2: number
 
   @Column({type: 'int'})
-  @IsString()
+  @IsNumber()
   quantity3: number
 
   @Column({type: 'int'})
@@ -160,7 +160,7 @@ export class CustomerInfo {
 
   @Column({type: 'varchar', length: 512, nullable: true})
   @IsString()
-  additionalNote: string
+  additionalNote?: string
 
   @Column({type: 'varchar'})
   @IsString()
