@@ -90,8 +90,8 @@ export class CustomerInfo {
   @IsString()
   coiFile: string
 
-  @Column({type: 'enum', enum: Payment})
-  @IsEnum(Payment)
+  @Column({type: 'varchar'})
+  @IsString()
   payment: Payment
 
   @Column({type: 'varchar', nullable: true})

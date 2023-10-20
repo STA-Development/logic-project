@@ -19,6 +19,7 @@ dbmsMysql
     console.log(initialize)
   })
   .catch((error) => {
+    console.log(error)
     throw new Error(errors.internalServer, error)
   })
 
