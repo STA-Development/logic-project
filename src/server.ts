@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import {errors, initialize} from './libs/consts/const'
 
 const server = express()
-const port = 3000
+const port = 80
 
 server.use(express.urlencoded({extended: true}))
 
