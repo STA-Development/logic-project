@@ -1,6 +1,8 @@
-import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm'
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
 import {IsDate, IsEnum, IsNumber, IsString} from 'class-validator'
 import {Payment} from '../../enums/payment'
+import {DesiredLanes} from './desired-lanes'
+
 @Entity('customer_info')
 export class CustomerInfo {
   @PrimaryGeneratedColumn()
@@ -162,43 +164,6 @@ export class CustomerInfo {
   @IsString()
   additionalNote?: string
 
-  @Column({type: 'varchar'})
-  @IsString()
-  fromCity1: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  fromCity2: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  fromCity3: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  fromCity4: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  fromCity5: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  toCity1: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  toCity2: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  toCity3: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  toCity4: string
-
-  @Column({type: 'varchar'})
-  @IsString()
-  toCity5: string
+  @OneToMany(() => DesiredLanes, (desiredLanes) => desiredLanes.customerInfo )
+  desiredLens : DesiredLanes[]
 }
