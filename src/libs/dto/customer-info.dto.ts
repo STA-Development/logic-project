@@ -3,6 +3,9 @@ import {Payment} from '../enums/payment'
 
 export class CustomerInfoDto {
   @IsString()
+  uuid : string
+
+  @IsString()
   companyName: string
 
   @IsNumber()
@@ -118,34 +121,19 @@ export class CustomerInfoDto {
 
   @IsString()
   additionalNote?: string
+}
+
+
+export class DesiredLanesDto {
+  @IsNumber()
+  id : number
 
   @IsString()
-  fromCity1: string
+  fromCity:string
 
   @IsString()
-  fromCity2: string
+  toCity: string
 
   @IsString()
-  fromCity3: string
-
-  @IsString()
-  fromCity4: string
-
-  @IsString()
-  fromCity5: string
-
-  @IsString()
-  toCity1: string
-
-  @IsString()
-  toCity2: string
-
-  @IsString()
-  toCity3: string
-
-  @IsString()
-  toCity4: string
-
-  @IsString()
-  toCity5: string
+  customerInfoUuid: string;
 }

@@ -1,5 +1,5 @@
 import {InsertResult, Repository} from 'typeorm'
-import {CustomerInfo} from '../libs/db/entities/customer-info'
+import {CustomerInfo} from '../libs/entities/customer-info'
 import {CustomerInfoDto} from '../libs/dto/customer-info.dto'
 import {dbmsMysql} from '../libs/db/db'
 import fileUpload from 'express-fileupload'

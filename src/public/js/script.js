@@ -1,5 +1,17 @@
 let uploadedFileNames = {}
 let selectedRadioButton = ''
+let uniqueUuid = ''
+
+function generateUniqueString(length) {
+  let randomString = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomString += characters[randomIndex];
+  }
+  return randomString;
+}
 
 function findRadioButtonName(name) {
   selectedRadioButton = name
@@ -9,7 +21,7 @@ const form = document.querySelector('.needs-validation')
 
 async function UploadImages(event, name) {
 
-  const backendEndpoint = 'http://localhost:3000/api/upload'
+  const backendEndpoint = 'http://localhost:80/api/upload'
 
   const file = event.target.files[0]
 
@@ -63,19 +75,9 @@ async function postData() {
   const qty2Input = document.getElementById('qty2').value
   const qty3Input = document.getElementById('qty3').value
   const additionalNotesInput = document.getElementById('additionalNote').value
-  const fromCity1Inputs = document.getElementById('fromCity1').value
-  const fromCity2Inputs = document.getElementById('fromCity2').value
-  const fromCity3Inputs = document.getElementById('fromCity3').value
-  const fromCity4Inputs = document.getElementById('fromCity4').value
-  const fromCity5Inputs = document.getElementById('fromCity5').value
-  const toCity1Inputs = document.getElementById('toCity1').value
-  const toCity2Inputs = document.getElementById('toCity2').value
-  const toCity3Inputs = document.getElementById('toCity3').value
-  const toCity4Inputs = document.getElementById('toCity4').value
-  const toCity5Inputs = document.getElementById('toCity5').value
-
   try {
-    const response = await axios.post('http://localhost:3000/api/company', {
+    const response = await axios.post('http://localhost:80/api/company', {
+      uuid : uniqueUuid,
       companyName: companyNameInput,
       mc: mcInput,
       address: addressInput,
@@ -115,25 +117,32 @@ async function postData() {
       quantity3: qty3Input,
       powerOfUnits: powerUnitsInput,
       additionalNote: additionalNotesInput,
-      fromCity1: fromCity1Inputs,
-      fromCity2: fromCity2Inputs,
-      fromCity3: fromCity3Inputs,
-      fromCity4: fromCity4Inputs,
-      fromCity5: fromCity5Inputs,
-      toCity1: toCity1Inputs,
-      toCity2: toCity2Inputs,
-      toCity3: toCity3Inputs,
-      toCity4: toCity4Inputs,
-      toCity5: toCity5Inputs,
       optionCity: optionCityInput,
       optionState: optionStateInput,
       optionZip: optionZipInput,
     })
-    showAlert('success', 'Form submitted successfully!')
+    return await response
   } catch (error) {
-   throw new Error()
+    throw new Error()
   }
 }
+async function addDesiredLanes(){
+  const fromCityOptionalInput = document.getElementById('fromCity').value
+  const toCityOptionalInput = document.getElementById('toCity').value
+  try {
+    const response = await axios.post('http://localhost:80/api/desiredLanes', [{
+      fromCity : fromCityOptionalInput,
+      toCity : toCityOptionalInput,
+      customerInfoUuid : uniqueUuid,
+    }])
+    return await response
+  }
+  catch(error) {
+    throw new Error()
+  }
+}
+
+
 function hideShowDiv(val) {
   if (val === 1) {
     document.getElementById('box').style.display = 'block'
@@ -145,21 +154,20 @@ function hideShowDiv(val) {
   }
 }
 const formId = document.getElementById('my_form')
-document.getElementById('submit').addEventListener('click', function (event) {
+document.getElementById('submit').addEventListener('click', async function(event) {
   event.preventDefault()
   if (!form.checkValidity()) {
     event.preventDefault()
     event.stopPropagation()
     form.classList.add('was-validated');
   } else {
-    postData()
+    uniqueUuid = generateUniqueString(10)
+    await postData()
+    await addDesiredLanes()
     formId.reset()
     form.classList.remove('was-validated');
   }
-
-
 })
-
 const box = document.getElementById('box')
 const boxSecond = document.getElementById('box')
 function handleRadioClick() {
@@ -176,21 +184,46 @@ function handleRadioClick() {
   }
 }
 
-function showAlert(type, message) {
-  const alertDiv = document.createElement('div')
-  alertDiv.className = `alert alert-${type} alert-dismissible fade show`
-  alertDiv.textContent = message
-
-  const container = document.querySelector('.container')
-  container.appendChild(alertDiv)
-
-  setTimeout(function () {
-    alertDiv.remove()
-  }, 3000)
-}
-
 const radioButtons = document.querySelectorAll('input[name="example"]')
 
 radioButtons.forEach((radio) => {
   radio.addEventListener('click', handleRadioClick)
 })
+const addButton = document.getElementById("add");
+
+
+function removeInputFields(event) {
+  const parentDiv = event.target.closest('.delivery-address');
+  parentDiv.remove();
+}
+addButton.addEventListener("click", function() {
+  const newInputFields = document.createElement("div");
+  newInputFields.innerHTML = `
+<div class="row delivery-address">
+
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="fromCity" class="form-label">From (City,State)</label>
+                    <input type="text" class="form-control" id="fromCity">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="toCity" class="form-label">To (City, State)</label>
+                    <input type="text" class="form-control" id="toCity">
+                </div>
+            </div>
+            <div class="col-md-2" style='margin-top: 33px'>
+                <div class="mb-3">
+                    <button id="remove" style='border: 2px solid #6699cc; font-weight: bold; width:40px' type="button" class="btn btn-light">-</button>
+                </div>
+            </div>
+        </div>
+            `;
+  document.querySelector(".delivery-address").appendChild(newInputFields);
+});
+document.addEventListener("click", function(event) {
+  if (event.target.id === "remove") {
+    removeInputFields(event);
+  }
+});

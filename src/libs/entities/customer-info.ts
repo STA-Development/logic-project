@@ -1,12 +1,17 @@
 import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
-import {IsDate, IsEnum, IsNumber, IsString} from 'class-validator'
-import {Payment} from '../../enums/payment'
+import {IsDate, IsNumber, IsString} from 'class-validator'
 import {DesiredLanes} from './desired-lanes'
+//import {DesiredLanes} from './desired-lanes'
 
 @Entity('customer_info')
 export class CustomerInfo {
   @PrimaryGeneratedColumn()
   id: number
+
+  @Column({type: 'varchar', unique:true})
+  @IsString()
+  uuid: string
+
 
   @Column({type: 'varchar'})
   @IsString()
@@ -92,9 +97,8 @@ export class CustomerInfo {
   @IsString()
   coiFile: string
 
-  @Column({type: 'enum', enum: Payment})
-  @IsEnum(Payment)
-  payment: Payment
+  @Column({type: 'varchar'})
+  @IsString()
 
   @Column({type: 'varchar', nullable: true})
   @IsString()

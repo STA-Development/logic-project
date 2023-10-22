@@ -1,4 +1,5 @@
 export const currentDate = Date.now()
+export const customerInfoId = ''
 export const initialize = 'Data Source has been initialized'
 
 export const errors = {

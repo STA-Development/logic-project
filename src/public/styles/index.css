@@ -15,7 +15,8 @@ label, p {
 }
 input[type="text"],
 input[type="number"],
-input[type="file"] {
+input[type="file"]
+{
     border: 2px solid #6699cc;
     font-weight: bold;
 }
