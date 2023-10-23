@@ -1,4 +1,5 @@
 import {IsDate, IsNumber, IsString} from 'class-validator'
+import {DesiredLanes} from '../entities/desired-lanes'
 
 export class CustomerInfoDto {
   @IsString()
@@ -117,6 +118,8 @@ export class CustomerInfoDto {
 
   @IsString()
   additionalNote?: string
+
+  desiredLanes : DesiredLanes[]
 }
 
 

@@ -58,5 +58,13 @@ class CustomerInfoService {
     await this.customerInfoRepository.save(customerInfo);
     return customerInfo.id
   }
+
+
+  async getAllCustomerInfo() : Promise<CustomerInfo[]>{
+   return await this.customerInfoRepository.find({relations:{desiredLanes : true}})
+  }
+  async getCustomerInfoById(id : number) : Promise<CustomerInfo | null>{
+    return await this.customerInfoRepository.findOne({where: {id}, relations:{desiredLanes : true}})
+  }
 }
 export default new CustomerInfoService()

@@ -20,7 +20,7 @@ export class DesiredLanes {
   @IsString()
   customerInfoId: number;
 
-  @ManyToOne(() => CustomerInfo, (customerInfo) => customerInfo.desiredLens)
+  @ManyToOne(() => CustomerInfo, (customerInfo) => customerInfo.desiredLanes )
   @JoinColumn({ name: 'customerInfoId' })
   customerInfo: CustomerInfo;
 }

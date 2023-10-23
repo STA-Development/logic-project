@@ -164,5 +164,5 @@ export class CustomerInfo {
   additionalNote?: string
 
   @OneToMany(() => DesiredLanes, (desiredLanes) => desiredLanes.customerInfo )
-  desiredLens : DesiredLanes[]
+  desiredLanes : DesiredLanes[]
 }

@@ -4,6 +4,7 @@ import {dbmsMysql} from './libs/db/db'
 import {router} from './routes/customer-routes'
 import bodyParser from 'body-parser'
 import {errors, initialize} from './libs/consts/const'
+import customerInfoService from './services/customer-info.service'
 
 const server = express()
 const port = 80
@@ -39,3 +40,23 @@ server.get('/success', (req, res) => {
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
+
+
+server.get('/list', async (req, res) => {
+  try{
+    const result =  await customerInfoService.getAllCustomerInfo()
+    res.render('list', { result });
+  } catch (error) {
+    return res.status(500).json({error: errors.internalServer});
+  }
+});
+
+server.get(`/list-id/:id`, async (req, res) => {
+  try{
+    const id = Number(req.params.id)
+    const getOneCustomerInfo =  await customerInfoService.getCustomerInfoById(id)
+    res.render('list-id', { getOneCustomerInfo });
+  } catch (error) {
+    return res.status(500).json({error: errors.internalServer});
+  }
+});
