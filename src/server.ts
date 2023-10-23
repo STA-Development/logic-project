@@ -31,6 +31,11 @@ server.get('/', (req, res) => {
   res.render('index', {title: 'Express'})
 })
 
+server.get('/success', (req, res) => {
+  res.render('success', { title: 'Success' });
+});
+
+
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })

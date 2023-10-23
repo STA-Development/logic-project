@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <div class=" text-center py-4" style="color:#6699cc">
-    <img src="styles/logos/truck.svg" alt="Description of the image">
+    <img style='height: 20%; width :20%' src="styles/logos/truck.svg" alt="truck">
     <h1>Welcome</h1>
 </div>
 <div class="container" style="margin: 150px auto auto;">
@@ -203,12 +203,12 @@
                 <label class="form-check-label" for="ThirtyDays">30 Days (Standard)</label>
             </div>
             <div>
-                <input onclick='hideShowDiv(2)' type="radio" class="form-check-input mx-2" id="businessDays" name="options" onchange='findRadioButtonName("BusinessDays")'>
-                <label class="form-check-label" for="BusinessDays">5-7 Business Days (Quick Pay) <br> We do not charge for quick pay!</label>
-            </div>
-            <div>
                 <input onclick='hideShowDiv(1)' type="radio" class="form-check-input" id="thirtyDaysFactoring" name="options" onchange='findRadioButtonName("ThirtyDaysFactoring")'>
                 <label class="form-check-label" for="hirtyDaysFactoring">30 days to Factoring</label>
+            </div>
+            <div>
+                <input onclick='hideShowDiv(2)' type="radio" class="form-check-input mx-2" id="businessDays" name="options" onchange='findRadioButtonName("BusinessDays")'>
+                <label class="form-check-label" for="BusinessDays">5-7 Business Days (Quick Pay) <br> We do not charge for quick pay!</label>
             </div>
         </div>
         <div class="div-optionalFirst" id='box'>
@@ -358,13 +358,6 @@
 
         <button id="submit" type="button" class="btn btn-primary ms-auto" style="width: 10%; background-color:#6699cc; border: none ">Submit</button>
     </form>
-
-
-    <div class=" text-center py-4" style="color:#6699cc">
-        <img src="styles/logos/truck.svg" alt="Description of the image">
-        <h1>Success</h1>
-        <p style="color:white">Please call or Email your point of contact to track your boarding process</p>
-    </div>
 </div>
 <script src='js/script.js'></script>
 </body>

@@ -123,7 +123,7 @@ async function postData() {
       },
       desiredLanes: desiredLanesArray,
     })
-    return await response
+    window.location.href = '/success'
   } catch (error) {
     throw new Error()
   }
