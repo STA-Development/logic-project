@@ -1,0 +1,67 @@
+.design-header {
+    margin-bottom: 50px;
+    margin-top: 30px;
+    color:#6699cc;
+    font-weight: bold;
+
+}
+.design-form {
+    display: flex;
+    flex-direction: column;
+    gap:30px
+}
+label, p {
+    color:#6699cc;
+}
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+    border: 2px solid #6699cc;
+    font-weight: bold;
+}
+.payment-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px
+}
+.number-container {
+    display: flex;
+   gap:23%;
+}
+
+.example {
+    display: block;
+}
+
+.div-optionalFirst {
+    display: none;
+}
+.div-optionalSecond {
+    display:none
+}
+/*
+.payCompanyNameClass:checked ~ .example {
+    display: none;
+}
+ */
+/*
+.div-optionalFirst{
+    display: none;
+}
+.div-optionalSecond{
+    display: none;
+}
+
+
+.payCompanyNameClass:checked ~ .div-optionalSecond {
+    display: none;
+}
+#option2:checked ~ .div-optionalSecond {
+    display: block;
+}
+
+#option1:checked ~ .div-optionalFirst,
+#option3:checked ~ .div-optionalFirst {
+    display: block;
+}
+
