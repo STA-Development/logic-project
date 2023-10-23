@@ -1,17 +1,5 @@
 let uploadedFileNames = {}
 let selectedRadioButton = ''
-let uniqueUuid = ''
-
-function generateUniqueString(length) {
-  let randomString = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomString += characters[randomIndex];
-  }
-  return randomString;
-}
 
 function findRadioButtonName(name) {
   selectedRadioButton = name
@@ -75,73 +63,72 @@ async function postData() {
   const qty2Input = document.getElementById('qty2').value
   const qty3Input = document.getElementById('qty3').value
   const additionalNotesInput = document.getElementById('additionalNote').value
+  const fromCityOptionalInput = document.querySelectorAll('.fromCity')
+  const toCityOptionalInput = document.querySelectorAll('.toCity')
+  let desiredLanesArray = [];
+  fromCityOptionalInput.forEach((input, index) => {
+    desiredLanesArray.push({
+      fromCity: input.value,
+      toCity: toCityOptionalInput[index].value
+    });
+    desiredLanesArray = desiredLanesArray.filter(item => item.fromCity !== '' || item.toCity !== '')
+  });
+
+
   try {
     const response = await axios.post('http://localhost:80/api/company', {
-      uuid : uniqueUuid,
-      companyName: companyNameInput,
-      mc: mcInput,
-      address: addressInput,
-      city: cityInput,
-      state: stateInput,
-      zip: zipInput,
-      primaryPh: primaryPhInput,
-      ext: extInput,
-      secondaryPh: secondaryPhInput,
-      generalContact: generalContactInput,
-      cell: cellInput,
-      legalName: legalNameInput,
-      dbaName: dbaNameInput,
-      fid: fidInput,
-      w9File: uploadedFileNames.w9File,
-      insuranceCompanyName: insuranceCompanyInput,
-      liabilityCoverage: liabilityCoverageInput,
-      cargoCoverage: cargoCoverageInput,
-      liabilityExpDate: liabilityExpInput,
-      cargoExpDate: cargoExpInput,
-      coiFile: uploadedFileNames.coiFile,
-      payment: selectedRadioButton,
-      payToCompanyName: payCompanyNameInput,
-      payToCompanyAddress: payCompanyAddressInput,
-      paymentCity: optionCityInput,
-      paymentState: optionStateInput,
-      paymentZip: optionZipInput,
-      routingNumber: routingNumberInput,
-      accountNumber: accountNumberInput,
-      noaFile: uploadedFileNames.noaFile,
-      directPaymentFile: uploadedFileNames.directPaymentFile,
-      type: typeInput,
-      type2: type2Input,
-      type3: type3Input,
-      quantity: qtyInput,
-      quantity2: qty2Input,
-      quantity3: qty3Input,
-      powerOfUnits: powerUnitsInput,
-      additionalNote: additionalNotesInput,
-      optionCity: optionCityInput,
-      optionState: optionStateInput,
-      optionZip: optionZipInput,
+      customerInfo: {
+        companyName: companyNameInput,
+        mc: mcInput,
+        address: addressInput,
+        city: cityInput,
+        state: stateInput,
+        zip: zipInput,
+        primaryPh: primaryPhInput,
+        ext: extInput,
+        secondaryPh: secondaryPhInput,
+        generalContact: generalContactInput,
+        cell: cellInput,
+        legalName: legalNameInput,
+        dbaName: dbaNameInput,
+        fid: fidInput,
+        w9File: uploadedFileNames.w9File,
+        insuranceCompanyName: insuranceCompanyInput,
+        liabilityCoverage: liabilityCoverageInput,
+        cargoCoverage: cargoCoverageInput,
+        liabilityExpDate: liabilityExpInput,
+        cargoExpDate: cargoExpInput,
+        coiFile: uploadedFileNames.coiFile,
+        payment: selectedRadioButton,
+        payToCompanyName: payCompanyNameInput,
+        payToCompanyAddress: payCompanyAddressInput,
+        paymentCity: optionCityInput,
+        paymentState: optionStateInput,
+        paymentZip: optionZipInput,
+        routingNumber: routingNumberInput,
+        accountNumber: accountNumberInput,
+        noaFile: uploadedFileNames.noaFile,
+        directPaymentFile: uploadedFileNames.directPaymentFile,
+        type: typeInput,
+        type2: type2Input,
+        type3: type3Input,
+        quantity: qtyInput,
+        quantity2: qty2Input,
+        quantity3: qty3Input,
+        powerOfUnits: powerUnitsInput,
+        additionalNote: additionalNotesInput,
+        optionCity: optionCityInput,
+        optionState: optionStateInput,
+        optionZip: optionZipInput,
+      },
+      desiredLanes: desiredLanesArray,
     })
+    console.log(response)
     return await response
   } catch (error) {
     throw new Error()
   }
 }
-async function addDesiredLanes(){
-  const fromCityOptionalInput = document.getElementById('fromCity').value
-  const toCityOptionalInput = document.getElementById('toCity').value
-  try {
-    const response = await axios.post('http://localhost:80/api/desiredLanes', [{
-      fromCity : fromCityOptionalInput,
-      toCity : toCityOptionalInput,
-      customerInfoUuid : uniqueUuid,
-    }])
-    return await response
-  }
-  catch(error) {
-    throw new Error()
-  }
-}
-
 
 function hideShowDiv(val) {
   if (val === 1) {
@@ -161,9 +148,7 @@ document.getElementById('submit').addEventListener('click', async function(event
     event.stopPropagation()
     form.classList.add('was-validated');
   } else {
-    uniqueUuid = generateUniqueString(10)
     await postData()
-    await addDesiredLanes()
     formId.reset()
     form.classList.remove('was-validated');
   }
@@ -204,26 +189,24 @@ addButton.addEventListener("click", function() {
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="fromCity" class="form-label">From (City,State)</label>
-                    <input type="text" class="form-control" id="fromCity">
+                    <input type="text" class="form-control fromCity">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="toCity" class="form-label">To (City, State)</label>
-                    <input type="text" class="form-control" id="toCity">
+                    <input type="text" class="form-control toCity">
                 </div>
             </div>
             <div class="col-md-2" style='margin-top: 33px'>
                 <div class="mb-3">
-                    <button id="remove" style='border: 2px solid #6699cc; font-weight: bold; width:40px' type="button" class="btn btn-light">-</button>
+                    <button style='border: 2px solid #6699cc; font-weight: bold; width:40px' type="button" class="btn btn-light removeDeliveryAddress">-</button>
                 </div>
             </div>
         </div>
             `;
   document.querySelector(".delivery-address").appendChild(newInputFields);
-});
-document.addEventListener("click", function(event) {
-  if (event.target.id === "remove") {
-    removeInputFields(event);
-  }
+
+  const removeDeliveryAddressBtns = document.querySelectorAll(".removeDeliveryAddress");
+  removeDeliveryAddressBtns.forEach(item => item.addEventListener('click', removeInputFields))
 });

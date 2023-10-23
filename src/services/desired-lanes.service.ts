@@ -4,22 +4,20 @@ import {dbmsMysql} from '../libs/db/db'
 import {DesiredLanes} from '../libs/entities/desired-lanes'
 
 class DesiredLanesService {
-  private readonly desiredLanesRepository : Repository<DesiredLanes>
+  private readonly desiredLanesRepository: Repository<DesiredLanes>
+
   constructor() {
     this.desiredLanesRepository = dbmsMysql.getRepository(DesiredLanes)
   }
-  async createDesiredLanes(desiredLanes : DesiredLanesDto[]) : Promise<InsertResult[]> {
-    const insertResults: InsertResult[] = [];
-    desiredLanes.map(async (lane) => {
-      const result = await this.desiredLanesRepository.insert({
-        id: lane.id,
-        fromCity: lane.fromCity,
-        toCity: lane.toCity,
-        customerInfoUuid: lane.customerInfoUuid
-      });
-      return insertResults.push(result);
-    })
-    return insertResults;
+
+  async createDesiredLanes(customerId: number, desiredLanes: DesiredLanesDto[]): Promise<InsertResult> {
+
+    const insertObjects = desiredLanes.map((lane) => ({
+      fromCity: lane.fromCity,
+      toCity: lane.toCity,
+      customerInfoId: customerId,
+    }));
+    return await this.desiredLanesRepository.insert(insertObjects);
   }
 }
 export default new DesiredLanesService()

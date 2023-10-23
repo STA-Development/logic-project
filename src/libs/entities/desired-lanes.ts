@@ -18,9 +18,9 @@ export class DesiredLanes {
 
   @Column({ type: 'varchar' })
   @IsString()
-  customerInfoUuid: string;
+  customerInfoId: number;
 
   @ManyToOne(() => CustomerInfo, (customerInfo) => customerInfo.desiredLens)
-  @JoinColumn({ name: 'customerInfoUuid', referencedColumnName: 'uuid' })
+  @JoinColumn({ name: 'customerInfoId' })
   customerInfo: CustomerInfo;
 }
