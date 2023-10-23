@@ -123,7 +123,6 @@ async function postData() {
       },
       desiredLanes: desiredLanesArray,
     })
-    console.log(response)
     return await response
   } catch (error) {
     throw new Error()
