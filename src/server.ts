@@ -53,8 +53,8 @@ server.get('/list', async (req, res) => {
 
 server.get(`/list-id/:id`, async (req, res) => {
   try{
-    const id = Number(req.params.id)
-    const getOneCustomerInfo =  await customerInfoService.getCustomerInfoById(id)
+    const customerInfoId = Number(req.params.id)
+    const getOneCustomerInfo =  await customerInfoService.getCustomerInfoById(customerInfoId)
     res.render('list-id', { getOneCustomerInfo });
   } catch (error) {
     return res.status(500).json({error: errors.internalServer});
