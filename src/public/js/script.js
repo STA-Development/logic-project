@@ -1,5 +1,6 @@
 let uploadedFileNames = {}
 let selectedRadioButton = ''
+const backendEndpoint = '/api/'
 
 function findRadioButtonName(name) {
   selectedRadioButton = name
@@ -8,16 +9,13 @@ function findRadioButtonName(name) {
 const form = document.querySelector('.needs-validation')
 
 async function UploadImages(event, name) {
-
-  const backendEndpoint = 'http://localhost:3000/api/upload'
-
   const file = event.target.files[0]
 
   const formData = new FormData()
   formData.append('file', file)
 
   try {
-    const response = await axios.post(backendEndpoint, formData, {
+    const response = await axios.post(`${backendEndpoint}/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -63,77 +61,72 @@ async function postData() {
   const qty2Input = document.getElementById('qty2').value
   const qty3Input = document.getElementById('qty3').value
   const additionalNotesInput = document.getElementById('additionalNote').value
-  const fromCity1Inputs = document.getElementById('fromCity1').value
-  const fromCity2Inputs = document.getElementById('fromCity2').value
-  const fromCity3Inputs = document.getElementById('fromCity3').value
-  const fromCity4Inputs = document.getElementById('fromCity4').value
-  const fromCity5Inputs = document.getElementById('fromCity5').value
-  const toCity1Inputs = document.getElementById('toCity1').value
-  const toCity2Inputs = document.getElementById('toCity2').value
-  const toCity3Inputs = document.getElementById('toCity3').value
-  const toCity4Inputs = document.getElementById('toCity4').value
-  const toCity5Inputs = document.getElementById('toCity5').value
+  const fromCityOptionalInput = document.querySelectorAll('.fromCity')
+  const toCityOptionalInput = document.querySelectorAll('.toCity')
+  let desiredLanesArray = [];
+  fromCityOptionalInput.forEach((input, index) => {
+    desiredLanesArray.push({
+      fromCity: input.value,
+      toCity: toCityOptionalInput[index].value
+    });
+    desiredLanesArray = desiredLanesArray.filter(item => item.fromCity !== '' || item.toCity !== '')
+  });
+
 
   try {
-    const response = await axios.post('http://localhost:3000/api/company', {
-      companyName: companyNameInput,
-      mc: mcInput,
-      address: addressInput,
-      city: cityInput,
-      state: stateInput,
-      zip: zipInput,
-      primaryPh: primaryPhInput,
-      ext: extInput,
-      secondaryPh: secondaryPhInput,
-      generalContact: generalContactInput,
-      cell: cellInput,
-      legalName: legalNameInput,
-      dbaName: dbaNameInput,
-      fid: fidInput,
-      w9File: uploadedFileNames.w9File,
-      insuranceCompanyName: insuranceCompanyInput,
-      liabilityCoverage: liabilityCoverageInput,
-      cargoCoverage: cargoCoverageInput,
-      liabilityExpDate: liabilityExpInput,
-      cargoExpDate: cargoExpInput,
-      coiFile: uploadedFileNames.coiFile,
-      payment: selectedRadioButton,
-      payToCompanyName: payCompanyNameInput,
-      payToCompanyAddress: payCompanyAddressInput,
-      paymentCity: optionCityInput,
-      paymentState: optionStateInput,
-      paymentZip: optionZipInput,
-      routingNumber: routingNumberInput,
-      accountNumber: accountNumberInput,
-      noaFile: uploadedFileNames.noaFile,
-      directPaymentFile: uploadedFileNames.directPaymentFile,
-      type: typeInput,
-      type2: type2Input,
-      type3: type3Input,
-      quantity: qtyInput,
-      quantity2: qty2Input,
-      quantity3: qty3Input,
-      powerOfUnits: powerUnitsInput,
-      additionalNote: additionalNotesInput,
-      fromCity1: fromCity1Inputs,
-      fromCity2: fromCity2Inputs,
-      fromCity3: fromCity3Inputs,
-      fromCity4: fromCity4Inputs,
-      fromCity5: fromCity5Inputs,
-      toCity1: toCity1Inputs,
-      toCity2: toCity2Inputs,
-      toCity3: toCity3Inputs,
-      toCity4: toCity4Inputs,
-      toCity5: toCity5Inputs,
-      optionCity: optionCityInput,
-      optionState: optionStateInput,
-      optionZip: optionZipInput,
+    const response = await axios.post(`${backendEndpoint}/company`, {
+      customerInfo: {
+        companyName: companyNameInput,
+        mc: mcInput,
+        address: addressInput,
+        city: cityInput,
+        state: stateInput,
+        zip: zipInput,
+        primaryPh: primaryPhInput,
+        ext: extInput,
+        secondaryPh: secondaryPhInput,
+        generalContact: generalContactInput,
+        cell: cellInput,
+        legalName: legalNameInput,
+        dbaName: dbaNameInput,
+        fid: fidInput,
+        w9File: uploadedFileNames.w9File,
+        insuranceCompanyName: insuranceCompanyInput,
+        liabilityCoverage: liabilityCoverageInput,
+        cargoCoverage: cargoCoverageInput,
+        liabilityExpDate: liabilityExpInput,
+        cargoExpDate: cargoExpInput,
+        coiFile: uploadedFileNames.coiFile,
+        payment: selectedRadioButton,
+        payToCompanyName: payCompanyNameInput,
+        payToCompanyAddress: payCompanyAddressInput,
+        paymentCity: optionCityInput,
+        paymentState: optionStateInput,
+        paymentZip: optionZipInput,
+        routingNumber: routingNumberInput,
+        accountNumber: accountNumberInput,
+        noaFile: uploadedFileNames.noaFile,
+        directPaymentFile: uploadedFileNames.directPaymentFile,
+        type: typeInput,
+        type2: type2Input,
+        type3: type3Input,
+        quantity: qtyInput,
+        quantity2: qty2Input,
+        quantity3: qty3Input,
+        powerOfUnits: powerUnitsInput,
+        additionalNote: additionalNotesInput,
+        optionCity: optionCityInput,
+        optionState: optionStateInput,
+        optionZip: optionZipInput,
+      },
+      desiredLanes: desiredLanesArray,
     })
-    showAlert('success', 'Form submitted successfully!')
+    window.location.href = '/success'
   } catch (error) {
-   throw new Error()
+    throw new Error()
   }
 }
+
 function hideShowDiv(val) {
   if (val === 1) {
     document.getElementById('box').style.display = 'block'
@@ -145,21 +138,18 @@ function hideShowDiv(val) {
   }
 }
 const formId = document.getElementById('my_form')
-document.getElementById('submit').addEventListener('click', function (event) {
+document.getElementById('submit').addEventListener('click', async function(event) {
   event.preventDefault()
   if (!form.checkValidity()) {
     event.preventDefault()
     event.stopPropagation()
     form.classList.add('was-validated');
   } else {
-    postData()
+    await postData()
     formId.reset()
     form.classList.remove('was-validated');
   }
-
-
 })
-
 const box = document.getElementById('box')
 const boxSecond = document.getElementById('box')
 function handleRadioClick() {
@@ -176,21 +166,44 @@ function handleRadioClick() {
   }
 }
 
-function showAlert(type, message) {
-  const alertDiv = document.createElement('div')
-  alertDiv.className = `alert alert-${type} alert-dismissible fade show`
-  alertDiv.textContent = message
-
-  const container = document.querySelector('.container')
-  container.appendChild(alertDiv)
-
-  setTimeout(function () {
-    alertDiv.remove()
-  }, 3000)
-}
-
 const radioButtons = document.querySelectorAll('input[name="example"]')
 
 radioButtons.forEach((radio) => {
   radio.addEventListener('click', handleRadioClick)
 })
+const addButton = document.getElementById("add");
+
+
+function removeInputFields(event) {
+  const parentDiv = event.target.closest('.delivery-address');
+  parentDiv.remove();
+}
+addButton.addEventListener("click", function() {
+  const newInputFields = document.createElement("div");
+  newInputFields.innerHTML = `
+<div class="row delivery-address">
+
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="fromCity" class="form-label">From (City,State)</label>
+                    <input type="text" class="form-control fromCity">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <label for="toCity" class="form-label">To (City, State)</label>
+                    <input type="text" class="form-control toCity">
+                </div>
+            </div>
+            <div class="col-md-2" style='margin-top: 33px'>
+                <div class="mb-3">
+                    <button style='border: 2px solid #6699cc; font-weight: bold; width:40px' type="button" class="btn btn-light removeDeliveryAddress">-</button>
+                </div>
+            </div>
+        </div>
+            `;
+  document.querySelector(".delivery-address").appendChild(newInputFields);
+
+  const removeDeliveryAddressBtns = document.querySelectorAll(".removeDeliveryAddress");
+  removeDeliveryAddressBtns.forEach(item => item.addEventListener('click', removeInputFields))
+});

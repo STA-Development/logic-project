@@ -1,5 +1,5 @@
-import {IsDate, IsEnum, IsNumber, IsString} from 'class-validator'
-import {Payment} from '../enums/payment'
+import {IsDate, IsNumber, IsString} from 'class-validator'
+import {DesiredLanes} from '../entities/desired-lanes'
 
 export class CustomerInfoDto {
   @IsString()
@@ -65,8 +65,8 @@ export class CustomerInfoDto {
   @IsString()
   coiFile: string
 
-  @IsEnum(Payment)
-  payment: Payment
+  @IsString()
+  payment: string
 
   @IsString()
   payToCompanyName?: string
@@ -119,33 +119,14 @@ export class CustomerInfoDto {
   @IsString()
   additionalNote?: string
 
+  desiredLanes : DesiredLanes[]
+}
+
+
+export class DesiredLanesDto {
   @IsString()
-  fromCity1: string
+  fromCity:string
 
   @IsString()
-  fromCity2: string
-
-  @IsString()
-  fromCity3: string
-
-  @IsString()
-  fromCity4: string
-
-  @IsString()
-  fromCity5: string
-
-  @IsString()
-  toCity1: string
-
-  @IsString()
-  toCity2: string
-
-  @IsString()
-  toCity3: string
-
-  @IsString()
-  toCity4: string
-
-  @IsString()
-  toCity5: string
+  toCity: string
 }

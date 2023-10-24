@@ -1,8 +1,8 @@
-import fileUpload, {FileArray} from 'express-fileupload'
+import fileUpload from 'express-fileupload'
 import {Request, Response} from 'express'
 import CustomerInfoService from '../services/customer-info.service'
 import {errors} from '../libs/consts/const'
-
+import DesiredLanesService from '../services/desired-lanes.service'
 
 class CustomerController {
 
@@ -13,17 +13,18 @@ class CustomerController {
       const name = await CustomerInfoService.savePhoto(originalName.filename)
       return res.json(name);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: errors.internalServer });
+      return res.status(500).json({error: errors.internalServer});
     }
   }
+
+
   async createCustomerInfo(req: Request, res: Response): Promise<unknown> {
     try {
-      const customerService = CustomerInfoService.createCustomerInfo(req.body)
-
-      return res.json(customerService)
+      const customerInfoId = await CustomerInfoService.createCustomerInfo(req.body.customerInfo);
+      const desiredLanes = await DesiredLanesService.createDesiredLanes(customerInfoId, req.body.desiredLanes)
+      return res.json({desiredLanes})
     } catch (error) {
-      return res.status(500).json({ error: errors.internalServer });
+      return res.status(500).json({error: errors.internalServer});
     }
   }
 }
