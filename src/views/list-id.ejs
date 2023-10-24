@@ -135,7 +135,29 @@
     </li>
     <% }); %>
 </li>
-    <li>
+    <li class="list-group-item">
+        <strong>W9 file:</strong> <a href="/img/<%= getOneCustomerInfo.w9File %>"  class="btn btn-outline-secondary">Download PDF</a>
+    </li>
+    <li class="list-group-item">
+       <strong>COI file:</strong>  <a href="/img/<%= getOneCustomerInfo.coiFile %>"  class="btn btn-outline-secondary">Download PDF</a>
+    </li>
+    <li class="list-group-item">
+        <strong>Direct Payment:</strong>
+        <% if (getOneCustomerInfo.directPaymentFile) { %>
+            <a href="/img/<%= getOneCustomerInfo.directPaymentFile %>" class="btn btn-outline-secondary">Download PDF</a>
+        <% } else { %>
+            No file available
+        <% } %>
+    </li>
+    <li class="list-group-item">
+        <strong>NOA file:</strong>
+        <% if (getOneCustomerInfo.noaFile) { %>
+            <a href="/img/<%= getOneCustomerInfo.noaFile %>" class="btn btn-outline-secondary">Download PDF</a>
+        <% } else { %>
+            No file available
+        <% } %>
+    </li>
+    <li class="list-group-item">
         <strong>Additional Note:</strong> <%= getOneCustomerInfo.additionalNote %><br>
     </li>
 </ul>

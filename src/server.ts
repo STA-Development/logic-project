@@ -24,6 +24,7 @@ dbmsMysql
     throw new Error(errors.internalServer, error)
   })
 
+
 server.set('views', path.join(__dirname, 'views'))
 
 server.set('view engine', 'ejs')
@@ -60,3 +61,17 @@ server.get(`/list-id/:id`, async (req, res) => {
     return res.status(500).json({error: errors.internalServer});
   }
 });
+
+server.get('/img/:fileName', (req, res) => {
+  const fileName = req.params.fileName;
+  const filePath = path.join(__dirname,'public',fileName);
+  if (!fileName) {
+    return res.status(400).send('Bad Request: Invalid file name');
+  }
+  res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+  res.download(filePath,fileName,(err) => {
+    if(err){
+      res.status(500).send('Can not get !')
+    }
+  })
+} )
