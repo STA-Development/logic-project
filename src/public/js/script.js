@@ -1,5 +1,6 @@
 let uploadedFileNames = {}
 let selectedRadioButton = ''
+const backendEndpoint = '/api/'
 
 function findRadioButtonName(name) {
   selectedRadioButton = name
@@ -8,16 +9,13 @@ function findRadioButtonName(name) {
 const form = document.querySelector('.needs-validation')
 
 async function UploadImages(event, name) {
-
-  const backendEndpoint = 'http://localhost:80/api/upload'
-
   const file = event.target.files[0]
 
   const formData = new FormData()
   formData.append('file', file)
 
   try {
-    const response = await axios.post(backendEndpoint, formData, {
+    const response = await axios.post(`${backendEndpoint}/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -76,7 +74,7 @@ async function postData() {
 
 
   try {
-    const response = await axios.post('http://localhost:80/api/company', {
+    const response = await axios.post(`${backendEndpoint}/company`, {
       customerInfo: {
         companyName: companyNameInput,
         mc: mcInput,
