@@ -68,6 +68,7 @@ server.get('/list',protect, async (req, res) => {
     const result = await customerInfoService.getAllCustomerInfo();
     res.render('list', {result});
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
@@ -78,6 +79,7 @@ server.get(`/list-id/:id`,protect, async (req, res) => {
     const customerInfo =  await customerInfoService.getCustomerInfoById(customerInfoId)
     res.render('list-id', { customerInfo });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({error: errors.internalServer});
   }
 });

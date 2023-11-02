@@ -13,6 +13,7 @@ class CustomerController {
       const name = await CustomerInfoService.savePhoto(originalName.filename)
       return res.json(name);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({error: errors.internalServer});
     }
   }
@@ -24,6 +25,7 @@ class CustomerController {
       const desiredLanes = await DesiredLanesService.createDesiredLanes(customerInfoId, req.body.desiredLanes)
       return res.json({desiredLanes})
     } catch (error) {
+      console.log(error);
       return res.status(500).json({error: errors.internalServer});
     }
   }
