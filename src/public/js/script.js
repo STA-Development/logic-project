@@ -127,14 +127,25 @@ async function postData() {
   }
 }
 
+function toggleRequireds(boxInputToRequire, boxInputToRemoveRequire) {
+  const allInputs = boxInputToRequire.querySelectorAll('input')
+  allInputs.forEach(oneInput => oneInput.setAttribute('required', 'true'))
+  const removedAllInputs = boxInputToRemoveRequire.querySelectorAll('input')
+  removedAllInputs.forEach(oneInput => oneInput.removeAttribute('required'))
+}
+
 function hideShowDiv(val) {
+  const boxToOne = document.getElementById('box')
+  const boxToSecond = document.getElementById('boxSecond')
   if (val === 1) {
-    document.getElementById('box').style.display = 'block'
-    document.getElementById('boxSecond').style.display = 'none'
+    boxToOne.style.display = 'block'
+    boxToSecond.style.display = 'none'
+    toggleRequireds(boxToOne, boxToSecond)
   }
   if (val === 2) {
-    document.getElementById('box').style.display = 'none'
-    document.getElementById('boxSecond').style.display = 'block'
+    boxToOne.style.display = 'none'
+    boxToSecond.style.display = 'block'
+    toggleRequireds(boxToSecond, boxToOne)
   }
 }
 const formId = document.getElementById('my_form')
@@ -175,14 +186,14 @@ const addButton = document.getElementById("add");
 
 
 function removeInputFields(event) {
-  const parentDiv = event.target.closest('.delivery-address');
+  const parentDiv = event.target.closest('.row');
   parentDiv.remove();
 }
 addButton.addEventListener("click", function() {
   const newInputFields = document.createElement("div");
+  newInputFields.classList.add('row')
+  newInputFields.style.marginLeft = '5px'
   newInputFields.innerHTML = `
-<div class="row delivery-address">
-
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="fromCity" class="form-label">From (City,State)</label>
@@ -200,8 +211,7 @@ addButton.addEventListener("click", function() {
                     <button style='border: 2px solid #6699cc; font-weight: bold; width:40px' type="button" class="btn btn-light removeDeliveryAddress">-</button>
                 </div>
             </div>
-        </div>
-            `;
+           `;
   document.querySelector(".delivery-address").appendChild(newInputFields);
 
   const removeDeliveryAddressBtns = document.querySelectorAll(".removeDeliveryAddress");

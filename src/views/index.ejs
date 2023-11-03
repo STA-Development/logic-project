@@ -8,21 +8,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-<body style="background-color: #c2ddee">
+<body style="background-color: #FAFAFA; padding-bottom: 40px;">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<div class=" text-center py-4" style="color:#6699cc">
-    <img style='height: 20%; width :20%' src="styles/logos/truck.svg" alt="truck">
+<div class=" text-center py-4" style="color:#424242">
+    <img style='height: 20%; width :20%' src="styles/logos/logo.png" alt="truck">
     <h1>Welcome</h1>
 </div>
-<div class="container" style="margin: 150px auto auto;">
-    <h3 style="color:#6699cc; font-weight: bold;">Thank you for choosing Proper Quality Freight!</h3>
+<div class="container" style="margin: 50px auto 0 auto;">
+    <h3 style="color:#424242; font-weight: bold;">Thank you for choosing Freight Haul Inc!</h3>
     <div style="display: flex">
-        <h3 style="color:#6699cc; font-weight: bold;">For joining the Proper Quality family please enter your inforfmation below</h3>
-        <img style="margin-top: 20px" src="styles/logos/arrow.svg" alt="Description of the image">
+        <h3 style="color:#424242; font-weight: bold;">For joining the Freight Haul Inc family please enter your inforfmation below</h3>
     </div>
-    <h2 class="design-header">GENERAL INFORMATION</h2>
+    <h2 class="design-header" style="margin-top: 100px">GENERAL INFORMATION</h2>
     <form class="design-form row g-3 needs-validation" id='my_form' novalidate>
         <div class="mb-3">
             <label for="companyName" class="form-label">Company Name</label>
@@ -195,45 +194,45 @@
         <div class="invalid-feedback">
             Please provide a valid upload
         </div>
-        <h2 style="margin-top: 20px; color:#6699cc;  font-weight: bold;">Payment Information</h2>
-        <h4 style="color:#6699cc;  font-weight: bold;">Pay Terms</h4>
+        <h2 style="margin-top: 20px; color:#424242;  font-weight: bold;">Payment Information</h2>
+        <h4 style="color:#424242;  font-weight: bold;">Pay Terms</h4>
         <div class="mb-3" style="display: flex; justify-content: space-between">
             <div>
-                <input onclick='hideShowDiv(1)' type="radio" class="form-check-input" id="thirtyDays" name="options" required onchange='findRadioButtonName("ThirtyDays")'>
-                <label class="form-check-label" for="ThirtyDays">30 Days (Standard)</label>
+                <input onclick='hideShowDiv(2)' type="radio" class="form-check-input" id="thirtyDays" name="options" required onchange='findRadioButtonName("ThirtyDays")'>
+                <label class="form-check-label" for="thirtyDays">30 Days (Standard)</label>
             </div>
             <div>
                 <input onclick='hideShowDiv(1)' type="radio" class="form-check-input" id="thirtyDaysFactoring" name="options" onchange='findRadioButtonName("ThirtyDaysFactoring")'>
-                <label class="form-check-label" for="hirtyDaysFactoring">30 days to Factoring</label>
+                <label class="form-check-label" for="thirtyDaysFactoring">30 days to Factoring</label>
             </div>
             <div>
                 <input onclick='hideShowDiv(2)' type="radio" class="form-check-input mx-2" id="businessDays" name="options" onchange='findRadioButtonName("BusinessDays")'>
-                <label class="form-check-label" for="BusinessDays">5-7 Business Days (Quick Pay) <br> We do not charge for quick pay!</label>
+                <label class="form-check-label" for="businessDays">5-7 Business Days (Quick Pay) <br> We do not charge for quick pay!</label>
             </div>
         </div>
         <div class="div-optionalFirst" id='box'>
             <div class="payment-container">
                 <div class="input-field">
-                    <label for="payCompanyName" style="color: #6699cc;">pay to Company Name (either direct carrier or factoring co.)</label>
-                    <input class="payCompanyNameClass" id="payCompanyName" style="width: 80%; border: 2px solid #6699cc;">
+                    <label for="payCompanyName" style="color: #424242;">Pay to Company Name (either direct carrier or factoring co.)</label>
+                    <input class="payCompanyNameClass" id="payCompanyName" style="width: 80%; border: 2px solid #424242;">
                 </div>
                 <div class="input-field">
-                    <label for="payCompanyAddress" style="color: #6699cc;">pay to Company Address</label>
-                    <input class="form-control" id="payCompanyAddress" style="width: 80%; border: 2px solid #6699cc;">
+                    <label for="payCompanyAddress" style="color: #424242;">Pay to Company Address</label>
+                    <input class="form-control" id="payCompanyAddress" style="width: 80%; border: 2px solid #424242;">
                 </div>
             </div>
             <div class="d-flex mb-4 gap-sm-5" style='margin-top:60px '>
                 <div>
-                    <label for="city" style="color: #6699cc;">City</label>
-                    <input class="form-control" id="optionCity" style="width: 200px; border: 2px solid #6699cc;">
+                    <label for="city" style="color: #424242;">City</label>
+                    <input class="form-control" id="optionCity" style="width: 200px; border: 2px solid #424242;">
                 </div>
                 <div class="input-field">
-                    <label for="state" style="color: #6699cc;">State</label>
-                    <input class="form-control" id="optionState" style="width: 200px; border: 2px solid #6699cc;">
+                    <label for="state" style="color: #424242;">State</label>
+                    <input class="form-control" id="optionState" style="width: 200px; border: 2px solid #424242;">
                 </div>
                 <div>
-                    <label for="zip" style="color: #6699cc;">Zip</label>
-                    <input class="form-control" id="optionZip" type="number" style="width: 200px; border: 2px solid #6699cc;">
+                    <label for="zip" style="color: #424242;">Zip</label>
+                    <input class="form-control" id="optionZip" type="number" style="width: 200px; border: 2px solid #424242;">
                 </div>
             </div>
             <div>
@@ -242,14 +241,14 @@
             </div>
         </div>
         <div class="div-optionalSecond" id='boxSecond'>
-            <div class="number-container" style='margin-top:60px '>
+            <div class="number-container">
                 <div>
-                    <label for="city" style="color: #6699cc;">Routing Number</label>
-                    <input class="form-control" id="routingNumber" style="width: 200px; border: 2px solid #6699cc;">
+                    <label for="city" style="color: #424242;">Routing Number</label>
+                    <input class="form-control" id="routingNumber" style="width: 200px; border: 2px solid #424242;">
                 </div>
                 <div class="input-field">
-                    <label for="state" style="color: #6699cc;">AccountNumber</label>
-                    <input class="form-control" id="accountNumber" style="width: 200px; border: 2px solid #6699cc;">
+                    <label for="state" style="color: #424242;">AccountNumber</label>
+                    <input class="form-control" id="accountNumber" style="width: 200px; border: 2px solid #424242;">
                 </div>
             </div>
             <div>
@@ -258,7 +257,7 @@
                 <p>For direct payments</p>
             </div>
         </div>
-        <h2 style="margin-top: 10px; color:#6699cc; font-weight: bold; ">Fleet Information</h2>
+        <h2 style="margin-top: 10px; color:#424242; font-weight: bold; ">Fleet Information</h2>
         <div class="row">
             <div class="col-md-2">
                 <div class="mb-3">
@@ -334,29 +333,57 @@
             <textarea class="form-control" id="additionalNote" style="width: 100%; height : 180px;resize: none;"></textarea>
         </div>
         <h2 class="design-header">Desired Lanes</h2>
-        <div class="row delivery-address" style='margin-left: 5px'>
-
-            <div class="col-md-2">
-                <div class="mb-3">
-                    <label for="fromCity" class="form-label">From (City,State)</label>
-                    <input type="text" class="form-control fromCity"  required>
+        <div class="delivery-address">
+            <div class="row" style='margin-left: 5px'>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="fromCity" class="form-label">From (City,State)</label>
+                        <input type="text" class="form-control fromCity"  required>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="toCity" class="form-label">To (City, State)</label>
+                        <input type="text" class="form-control toCity" required>
+                    </div>
+                </div>
+                <div class="col-md-2" style='margin-top: 33px'>
+                    <div class="mb-3">
+                        <button id="add" style='border: 2px solid #424242; font-weight: bold ;' type="button" class="btn btn-light">+</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="mb-3">
-                    <label for="toCity" class="form-label">To (City, State)</label>
-                    <input type="text" class="form-control toCity" required>
+            <div class="row" style="margin-left: 5px;">
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="fromCity" class="form-label">From (City,State)</label>
+                        <input type="text" class="form-control fromCity" required>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="toCity" class="form-label">To (City, State)</label>
+                        <input type="text" class="form-control toCity" required>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-2" style='margin-top: 33px'>
-                <div class="mb-3">
-                    <button id="add" style='border: 2px solid #6699cc; font-weight: bold ;' type="button" class="btn btn-light">+</button>
+            <div class="row" style="margin-left: 5px;">
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="fromCity" class="form-label">From (City,State)</label>
+                        <input type="text" class="form-control fromCity" required>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="toCity" class="form-label">To (City, State)</label>
+                        <input type="text" class="form-control toCity" required>
+                    </div>
                 </div>
             </div>
         </div>
 
-
-        <button id="submit" type="button" class="btn btn-primary ms-auto" style="width: 10%; background-color:#6699cc; border: none ">Submit</button>
+        <button id="submit" type="button" class="btn btn-primary ms-auto" style="width: 10%; background-color:#424242; border: none ">Submit</button>
     </form>
 </div>
 <script src='js/script.js'></script>
