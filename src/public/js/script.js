@@ -25,6 +25,13 @@ async function UploadImages(event, name) {
     throw new Error(error)
   }
 }
+function phoneMask() {
+  let num = $(this).val().replace(/\D/g, '');
+  $(this).val('(' + num.substring(0, 3) + ')-' + num.substring(3, 6) + '-' + num.substring(6, 10));
+}
+
+$('[type="tel"]').keyup(phoneMask);
+
 
 async function postData() {
   const companyNameInput = document.getElementById('companyName').value
@@ -185,6 +192,93 @@ radioButtons.forEach((radio) => {
 const addButton = document.getElementById("add");
 
 
+const usaCities = jsonData.map((item) => {
+  return `${item.name}, ${item.state}`
+})
+
+function autocomplete(className, arr) {
+  const inputs = document.querySelectorAll(`.${className}`);
+
+  inputs.forEach(input => {
+    input.addEventListener("input", function() {
+      let val = this.value;
+      closeAllLists();
+      if (!val) { return false; }
+
+      const matchingOptions = arr.filter(option => option.toUpperCase().startsWith(val.toUpperCase()));
+      let currentFocus = -1;
+
+      const autocompleteList = document.createElement("DIV");
+      autocompleteList.setAttribute("class", "autocomplete-items");
+      this.parentNode.appendChild(autocompleteList);
+
+      matchingOptions.forEach(option => {
+        const optionDiv = document.createElement("DIV");
+        optionDiv.innerHTML = `<strong>${option.substr(0, val.length)}</strong>${option.substr(val.length)}`;
+        optionDiv.innerHTML += `<input type='hidden' value='${option}'>`;
+        optionDiv.addEventListener("click", function() {
+          input.value = this.getElementsByTagName("input")[0].value;
+          closeAllLists();
+        });
+        autocompleteList.appendChild(optionDiv);
+      });
+
+      input.addEventListener("keydown", function(e) {
+        let x = document.getElementsByClassName("autocomplete-items");
+        let xArray;
+        if (x) {
+          xArray = Array.from(x);
+          x = xArray[0].getElementsByTagName('div');
+        }
+        if (e.keyCode === 40) {
+          currentFocus++;
+          addActive(x);
+        } else if (e.keyCode === 38) {
+          currentFocus--;
+          addActive(x);
+        } else if (e.keyCode === 13) {
+          e.preventDefault();
+          if (currentFocus > -1) {
+            if (x) {
+              x[currentFocus].click();
+            }
+          }
+        } else if (e.keyCode === 8 || e.keyCode === 46) {
+        } else {
+          e.preventDefault();
+        }
+      });
+
+      function addActive(x) {
+        if (!x) return false;
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = x.length - 1;
+        x[currentFocus].classList.add("autocomplete-active");
+      }
+
+      function removeActive(x) {
+        for (let i = 0; i < x.length; i++) {
+          x[i].classList.remove("autocomplete-active");
+        }
+      }
+
+      function closeAllLists(element) {
+        const x = document.getElementsByClassName("autocomplete-items");
+        for (let i = 0; i < x.length; i++) {
+          if (element !== x[i] && element !== input) {
+            x[i].parentNode.removeChild(x[i]);
+          }
+        }
+      }
+
+      document.addEventListener("click", function(e) {
+        closeAllLists(e.target);
+      });
+    });
+  });
+}
+
 function removeInputFields(event) {
   const parentDiv = event.target.closest('.row');
   parentDiv.remove();
@@ -197,13 +291,13 @@ addButton.addEventListener("click", function() {
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="fromCity" class="form-label">From (City,State)</label>
-                    <input type="text" class="form-control fromCity">
+                    <input type="text" class="form-control fromCity autocomplete">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="toCity" class="form-label">To (City, State)</label>
-                    <input type="text" class="form-control toCity">
+                    <input type="text" class="form-control toCity autocomplete">
                 </div>
             </div>
             <div class="col-md-2" style='margin-top: 33px'>
@@ -213,7 +307,12 @@ addButton.addEventListener("click", function() {
             </div>
            `;
   document.querySelector(".delivery-address").appendChild(newInputFields);
+  autocomplete("autocomplete",usaCities)
 
   const removeDeliveryAddressBtns = document.querySelectorAll(".removeDeliveryAddress");
   removeDeliveryAddressBtns.forEach(item => item.addEventListener('click', removeInputFields))
 });
+
+autocomplete("autocomplete-input", usaCities);
+
+
