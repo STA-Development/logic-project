@@ -201,6 +201,7 @@ function autocomplete(className, arr) {
 
   inputs.forEach(input => {
     input.addEventListener("input", function() {
+      this.value = this.value.replace(/\d/g, '');
       let val = this.value;
       closeAllLists();
       if (!val) { return false; }
