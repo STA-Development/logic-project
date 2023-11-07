@@ -153,7 +153,6 @@ document.getElementById('submit').addEventListener('click', async function(event
   event.preventDefault()
   if (!form.checkValidity()) {
     event.preventDefault()
-    event.stopPropagation()
     form.classList.add('was-validated');
   } else {
     await postData()
@@ -227,13 +226,13 @@ addButton.addEventListener("click", function() {
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="fromCity" class="form-label">From (City,State)</label>
-                    <input type="text" class="form-control fromCity autocomplete-input">
+                    <input type="text" class="form-control fromCity autocomplete-input" required>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="toCity" class="form-label">To (City, State)</label>
-                    <input type="text" class="form-control toCity autocomplete-input">
+                    <input type="text" class="form-control toCity autocomplete-input" required>
                 </div>
             </div>
             <div class="col-md-2" style='margin-top: 33px'>
