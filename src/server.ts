@@ -3,7 +3,7 @@ import path from 'path'
 import {dbmsMysql} from './libs/db/db'
 import {router} from './routes/customer-routes'
 import bodyParser from 'body-parser'
-import {errors, initialize, oneDay} from './libs/consts/const'
+import {errors, initialize, twoHour} from './libs/consts/const'
 import customerInfoService from './services/customer-info.service'
 import {generateToken, verifyPassword} from './libs/authentication/authuntication'
 import cookieParser from 'cookie-parser'
@@ -54,9 +54,11 @@ server.listen(port, () => {
 server.post('/verify-password', async (req, res) => {
   const { password } = req.body;
   const isValidPassword = await verifyPassword(password);
+
   if (isValidPassword) {
     const token = generateToken();
-    res.cookie('token', token, { httpOnly: true, expires: oneDay});
+    const expirationDate = new Date(Date.now() + twoHour)
+    res.cookie('token', token, { httpOnly: true, expires: expirationDate });
     res.redirect('/list')
   } else {
     res.redirect('/auth')
