@@ -136,15 +136,15 @@
     <% }); %>
 </li>
     <li class="list-group-item">
-        <strong>W9 file:</strong> <a href="/img/<%= customerInfo.w9File %>"  class="btn btn-outline-secondary">Download PDF</a>
+        <strong>W9 file:</strong> <a href="/img/<%= customerInfo.w9File %>"  class="btn btn-outline-secondary">Download File</a>
     </li>
     <li class="list-group-item">
-       <strong>COI file:</strong>  <a href="/img/<%= customerInfo.coiFile %>"  class="btn btn-outline-secondary">Download PDF</a>
+       <strong>COI file:</strong>  <a href="/img/<%= customerInfo.coiFile %>"  class="btn btn-outline-secondary">Download File</a>
     </li>
     <li class="list-group-item">
         <strong>Direct Payment:</strong>
         <% if (customerInfo.directPaymentFile) { %>
-            <a href="/img/<%= customerInfo.directPaymentFile %>" class="btn btn-outline-secondary">Download PDF</a>
+            <a href="/img/<%= customerInfo.directPaymentFile %>" class="btn btn-outline-secondary">Download File</a>
         <% } else { %>
             No file available
         <% } %>
