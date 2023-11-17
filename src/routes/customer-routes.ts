@@ -1,5 +1,5 @@
 import express from 'express'
-import {uploadCoi} from '../libs/storage/pdf-files.storage'
+import {uploadCoi} from '../libs/storage/files.storage'
 import CustomerController from '../controller/customer.controller'
 
 export const router = express.Router()

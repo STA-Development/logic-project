@@ -2,7 +2,7 @@ import multer from 'multer'
 import {Request} from 'express'
 import {currentDate, errors} from '../consts/const'
 
-export const pdfFilesStorage = multer.diskStorage({
+export const filesStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './src/public/img')
   },
@@ -13,16 +13,20 @@ export const pdfFilesStorage = multer.diskStorage({
   },
 })
 export const uploadCoi = multer({
-  storage: pdfFilesStorage,
+  storage: filesStorage,
   limits: {
     fileSize: 5000000,
   },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype == 'application/pdf') {
+    if (file.mimetype == 'application/pdf' ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg" ||
+      file.mimetype == "image/png"
+    ) {
       cb(null, true)
     } else {
       cb(null, false)
-      return cb(new Error(errors.pdf))
+      return cb(new Error(errors.formatFile))
     }
   },
 })
