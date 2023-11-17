@@ -153,7 +153,6 @@ document.getElementById('submit').addEventListener('click', async function(event
   event.preventDefault()
   if (!form.checkValidity()) {
     event.preventDefault()
-    event.stopPropagation()
     form.classList.add('was-validated');
   } else {
     await postData()
@@ -184,6 +183,36 @@ radioButtons.forEach((radio) => {
 })
 const addButton = document.getElementById("add");
 
+const usaCities = jsonData.map((item) => {
+  return `${item.name}, ${item.state}`
+})
+
+function initializeAutocomplete() {
+  $(".autocomplete-input").each(function() {
+    const fromCityInput = $(this);
+
+    fromCityInput.autocomplete({
+      source: usaCities
+    });
+
+    $(document).on("click", function(event) {
+      if (!$(event.target).closest(".ui-autocomplete").length) {
+        const userInput = fromCityInput.val();
+        const matched = $.ui.autocomplete.filter(usaCities, userInput);
+
+        if (matched.length === 0) {
+          fromCityInput.val("");
+        }
+
+        fromCityInput.autocomplete("close");
+      }
+    });
+  });
+}
+
+$(document).ready(function() {
+  initializeAutocomplete();
+});
 
 function removeInputFields(event) {
   const parentDiv = event.target.closest('.row');
@@ -197,13 +226,13 @@ addButton.addEventListener("click", function() {
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="fromCity" class="form-label">From (City,State)</label>
-                    <input type="text" class="form-control fromCity">
+                    <input type="text" class="form-control fromCity autocomplete-input" required>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="mb-3">
                     <label for="toCity" class="form-label">To (City, State)</label>
-                    <input type="text" class="form-control toCity">
+                    <input type="text" class="form-control toCity autocomplete-input" required>
                 </div>
             </div>
             <div class="col-md-2" style='margin-top: 33px'>
@@ -212,8 +241,14 @@ addButton.addEventListener("click", function() {
                 </div>
             </div>
            `;
+  $(document).ready(function() {
+    initializeAutocomplete();
+  });
   document.querySelector(".delivery-address").appendChild(newInputFields);
 
   const removeDeliveryAddressBtns = document.querySelectorAll(".removeDeliveryAddress");
   removeDeliveryAddressBtns.forEach(item => item.addEventListener('click', removeInputFields))
+
 });
+
+

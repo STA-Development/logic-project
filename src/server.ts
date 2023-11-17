@@ -8,6 +8,7 @@ import customerInfoService from './services/customer-info.service'
 import {generateToken, verifyPassword} from './libs/authentication/authuntication'
 import cookieParser from 'cookie-parser'
 import {protect} from './libs/middleware/middleware'
+import * as fs from 'fs'
 
 const server = express()
 const port = 80
@@ -34,7 +35,15 @@ server.set('views', path.join(__dirname, 'views'))
 server.set('view engine', 'ejs')
 
 server.get('/', (req, res) => {
-  res.render('index', {title: 'Express'})
+  const jsonFilePath = path.join(__dirname,'public/json/cities.json')
+  try {
+    const file = fs.readFileSync(jsonFilePath, 'utf-8')
+    const jsonData = JSON.parse(file)
+    res.render('index', {jsonData: jsonData})
+  }
+  catch (error){
+    res.status(500).send(errors.internalServer)
+  }
 })
 
 server.get('/success', (req, res) => {
@@ -71,7 +80,7 @@ server.get('/list',protect, async (req, res) => {
     res.render('list', {result});
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    res.status(500).json({ success: false, error: errors.internalServer });
   }
 });
 
@@ -95,7 +104,7 @@ server.get('/img/:fileName', (req, res) => {
   res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
   res.download(filePath,fileName,(err) => {
     if(err){
-      res.status(500).send('Can not get !')
+      res.status(500).send(errors.internalServer)
     }
   })
-} )
+})
